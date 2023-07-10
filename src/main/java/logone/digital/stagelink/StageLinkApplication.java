@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class StageLinkApplication {
 
 	public static void main(String[] args) {
+		//commentaire
 		SpringApplication.run(StageLinkApplication.class, args);
 	}
+
 
 }
