@@ -1,6 +1,9 @@
 package logone.digital.stagelink.utilisateur;
 
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import logone.digital.stagelink.stage.StageDto;
 import logone.digital.stagelink.stage.StageEntity;
 import lombok.Builder;
@@ -12,11 +15,18 @@ import java.time.Instant;
 public class UtilisateurDto {
 
     protected Long id;
+    @NotNull(message = "Le nom est obligatoire")
     protected String nom;
+    @Pattern(regexp = "\\d{10}", message = "Le numéro de téléphone doit contenir 10 chiffres")
+    @NotNull(message = "Le numéro de téléphone est obligatoire")
     protected String telephone;
+    @Email(message = "L'adresse email n'est pas valide")
     protected   String email;
+    @NotNull(message = "L'adresse est obligatoire")
     protected String adresse;
+    @NotNull(message = "L'adresse est obligatoire")
     protected String motDePasse;
+    @NotNull(message = "L'adresse est obligatoire")
     protected Instant dateInscription;
 
     public  static UtilisateurEntity toEntity(UtilisateurDto utilisateur){
