@@ -47,13 +47,12 @@ public class EtudiantEntity extends UtilisateurEntity implements Serializable {
 
 
     @JsonIgnore
-    @OneToMany(mappedBy = "etudiant")
+    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
     private Set<PostulationEntity> postulant0;
-
 
     @JsonIgnore
     @ManyToMany
-    private Set<StageEntity> stage;
+    private Set<StageEntity> stage0;
 
 }
 

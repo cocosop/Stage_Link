@@ -2,6 +2,7 @@ package logone.digital.stagelink.utilisateur;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import logone.digital.stagelink.forum.Forum;
 import logone.digital.stagelink.postulation.PostulationEntity;
 import lombok.*;
 
@@ -24,29 +25,29 @@ public class UtilisateurEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
     @Column
-    private String nom;
+    protected String nom;
 
     @Column
-    private String telephone;
+    protected String telephone;
 
     @Column
-    private  String email;
+    protected   String email;
 
     @Column
-    private String adresse;
+    protected String adresse;
 
     @Column
-    private String mot_de_passe;
+    protected String motDePasse;
 
     @Column
-    private Instant dateInscription;
+    protected Instant dateInscription;
 
-    /*@JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "utilisateur")
-    private Set<BlogEntity> blog;*/
+    protected Set<Forum> forum;
 
 
 }

@@ -26,6 +26,7 @@ public class Forum implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String publication;
+
     @JsonIgnore
     @OneToMany(mappedBy = "forum",cascade = CascadeType.ALL)
     private List<Commentaire> commentaires;
