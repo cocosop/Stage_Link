@@ -1,6 +1,7 @@
 package logone.digital.stagelink.postulation;
 
 import jakarta.persistence.*;
+//import logone.digital.stagelink.etudiant.EtudiantEntity;
 import lombok.*;
 
 import java.io.Serial;
@@ -30,7 +31,9 @@ public class PostulationEntity implements Serializable {
     @Column
     private Boolean statut;
 
-
+   /* @ManyToOne
+    @JoinColumn(name = "etudiant_id")
+    private EtudiantEntity etudiant;*/
 
 
 

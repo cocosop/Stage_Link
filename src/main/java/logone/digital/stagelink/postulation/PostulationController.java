@@ -15,7 +15,7 @@ public class PostulationController {
     final PostulationServive postulationServive;
 
 
-    //POST http://localhost:8080/projet/api/v1/postulations/ajouter
+    //POST http://localhost:8080/projet/api/postulations/ajouter
     @PostMapping(path = "/ajouter")
     @ResponseBody
     public PostulationDto ajouterPostulation(@RequestBody @Valid PostulationDto postulation)
