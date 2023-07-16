@@ -18,9 +18,9 @@ public class StageService implements IStageService {
     //qui genere le constructeur lors de l'execution pour éviter le boilerplate du code
 
     @Override
-    public StageDto create(StageDto stage) {
+    public StageDto create(StageDto stagedto) {
         return StageDto.toDto(
-                stageRepository.save(StageDto.toEntity(stage)));
+                stageRepository.save(StageDto.toEntity(stagedto)));
     }
 
     @Override

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/stages")
+@RequestMapping("/api/v1/stages")
 @AllArgsConstructor
 public class StageController {
 
@@ -48,7 +48,7 @@ public class StageController {
     @DeleteMapping(path = "/supprimer/{idStages}")
     @ResponseBody
     public void supprimerStages
-    (@PathVariable("idStage") Long id)
+    (@PathVariable("idStages") Long id)
     {
         stageService.deleteOneById(id);
     }
