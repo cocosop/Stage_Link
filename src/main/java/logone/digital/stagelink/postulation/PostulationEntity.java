@@ -1,13 +1,17 @@
 package logone.digital.stagelink.postulation;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 //import logone.digital.stagelink.etudiant.EtudiantEntity;
+import logone.digital.stagelink.etudiant.EtudiantEntity;
+import logone.digital.stagelink.stage.StageEntity;
 import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -31,11 +35,15 @@ public class PostulationEntity implements Serializable {
     @Column
     private Boolean statut;
 
-   /* @ManyToOne
+
+    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "etudiant_id")
-    private EtudiantEntity etudiant;*/
+    private EtudiantEntity etudiant;
 
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "postulation")
+    private Set<StageEntity> stage;
 
 
 

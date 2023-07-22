@@ -1,7 +1,10 @@
 package logone.digital.stagelink.stage;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import logone.digital.stagelink.etudiant.EtudiantService;
 import logone.digital.stagelink.postulation.PostulationEntity;
+import logone.digital.stagelink.etudiant.EtudiantEntity;
 import lombok.*;
 
 import java.io.Serial;
@@ -49,15 +52,19 @@ public class StageEntity implements Serializable {
 
 
 
-    @ManyToOne
-    @JoinColumn(name = "postulation_id")
-    private PostulationEntity postulant;
+
 
     /*@ManyToOne
     @JoinColumn(name = "entreprise_id")
     private EntrepriseEntity entreprise;*/
 
-    /*@ManyToMany
-    private Etudiant etudiant;*/
+    @JsonIgnore
+    @ManyToMany
+    private Set<EtudiantEntity> etudiant;
 
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "postulation_id")
+    private PostulationEntity postulation;
 }

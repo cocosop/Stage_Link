@@ -15,7 +15,7 @@ public class StageController {
     final StageService stageService;
 
 
-    //POST http://localhost:8080/projet/api/v1/stages/ajouter
+    //POST http://localhost:8080/stage-link/api/v1/stages/ajouter
     @PostMapping(path = "/ajouter")
     @ResponseBody
     public StageDto ajouterStages(@RequestBody @Valid StageDto stage)
@@ -25,7 +25,7 @@ public class StageController {
     }
 
 
-    //PUT http://localhost:8080/projet/api/v1/stages/modifier
+    //PUT http://localhost:8080/stage-link/api/v1/stages/modifier
     @PutMapping(path = "/modifier")
     @ResponseBody
     public StageDto modifierStages(@RequestBody  @Valid  StageDto stage){
@@ -34,7 +34,7 @@ public class StageController {
                 update(stage);
     }
 
-    //GET http://localhost:8080/projet/api/v1/stage/recuperer-tous
+    //GET http://localhost:8080/stage-link/api/v1/stage/recuperer-tous
     @GetMapping(path = "/recuperer-tous")
     @ResponseBody
     public List<StageDto> recupererStages()
@@ -44,7 +44,7 @@ public class StageController {
 
 
 
-    // DELETE http://localhost:8080/projet/api/v1/stages/supprimer/1
+    // DELETE http://localhost:8080/stage-link/api/v1/stages/supprimer/1
     @DeleteMapping(path = "/supprimer/{idStages}")
     @ResponseBody
     public void supprimerStages
