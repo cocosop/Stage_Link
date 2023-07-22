@@ -1,0 +1,20 @@
+package logone.digital.stagelink.entreprise;
+
+import logone.digital.stagelink.entreprise.EntrepriseDto;
+
+import java.util.List;
+
+public interface IEntrepriseService {
+
+    EntrepriseDto create(EntrepriseDto entreprise);
+
+    List<EntrepriseDto> readAll();
+
+    EntrepriseDto readOneById(Long id);
+
+    EntrepriseDto update(EntrepriseDto entreprise);
+
+    void deleteOneById(Long id);
+
+    void deleteOne(EntrepriseDto entreprise);
+}

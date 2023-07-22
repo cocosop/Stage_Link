@@ -53,6 +53,4 @@ public class EtudiantEntity implements Serializable {
         private Set<PostulationEntity> postulationEntities;
 
 
-
-
 }

@@ -1,16 +1,13 @@
-package logone.digital.stagelink.postulation;
+package logone.digital.stagelink.entreprise;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-//import logone.digital.stagelink.etudiant.EtudiantEntity;
-import logone.digital.stagelink.etudiant.EtudiantEntity;
-
 import logone.digital.stagelink.stage.StageEntity;
 import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Set;
 
 @Entity
@@ -18,9 +15,9 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "_postulation")
+@Table(name = "_entreprise")
 @Builder
-public class PostulationEntity implements Serializable {
+public class EntrepriseEntity implements Serializable {
 
     @Serial
     private static final  long serialVersionUID = 1L;
@@ -30,21 +27,12 @@ public class PostulationEntity implements Serializable {
     private Long id;
 
     @Column
-    private Instant datePostulation;
-
-    @Column
-    private Boolean statut;
+    private String responsable;
 
 
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "etudiant_id")
-    private EtudiantEntity etudiant;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "postulation")
+    @OneToMany(mappedBy = "entreprise1", cascade = CascadeType.ALL)
     private Set<StageEntity> stage;
-
 
 
 }
