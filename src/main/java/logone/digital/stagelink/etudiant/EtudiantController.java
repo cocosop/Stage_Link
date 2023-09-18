@@ -2,7 +2,11 @@ package logone.digital.stagelink.etudiant;
 
 
 import jakarta.validation.Valid;
+import logone.digital.stagelink.entreprise.EntrepriseDto;
+import logone.digital.stagelink.entreprise.EntrepriseEntity;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,10 +21,9 @@ public class EtudiantController {
     //POST http://localhost:8080/stage-link/api/v1/etudiants/ajouter
     @PostMapping(path = "/ajouter")
     @ResponseBody
-    public EtudiantDto ajouterEtudiants(@RequestBody @Valid EtudiantDto etudiant)
+    public ResponseEntity<EtudiantDto> ajouterEtudiants(@RequestBody @Valid EtudiantEntity etudiant)
     {
-        return etudiantService.
-                create(etudiant);
+        return new ResponseEntity<>(etudiantService.create(etudiant),HttpStatus.CREATED);
     }
 
     //PUT http://localhost:8080/stage-link/api/v1/etudiants/modifier
@@ -47,5 +50,12 @@ public class EtudiantController {
     (@PathVariable("idEtudiants") Long id)
     {
         etudiantService.deleteOneById(id);
+    }
+
+    @GetMapping(path = "/recuperer/{idEtudiants}")
+    @ResponseBody
+    public EtudiantDto recupererEtudiant(@PathVariable("idEtudiants") Long id)
+    {
+        return etudiantService.readOneById(id);
     }
 }

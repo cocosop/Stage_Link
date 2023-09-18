@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IEntrepriseService {
 
-    EntrepriseDto create(EntrepriseDto entreprise);
+    EntrepriseDto create(EntrepriseEntity entreprise);
 
     List<EntrepriseDto> readAll();
 
@@ -14,7 +14,9 @@ public interface IEntrepriseService {
 
     EntrepriseDto update(EntrepriseDto entreprise);
 
-    void deleteOneById(Long id);
+    //void deleteOneById(Long id);
+
+    public String deleteOneById(Long id);
 
     void deleteOne(EntrepriseDto entreprise);
 }

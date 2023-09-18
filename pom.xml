@@ -10,10 +10,10 @@
 	</parent>
 
 	<groupId>logone.digital</groupId>
-	<artifactId>projet-spring</artifactId>
+	<artifactId>stage-link</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>projet-spring</name>
-	<description>Projet Spring chez logone</description>
+	<name>stage-link</name>
+	<description>Project Spring chez logon</description>
 	<properties>
 		<java.version>20</java.version>
 	</properties>
@@ -83,7 +83,7 @@
 				<configuration>
 					<excludes>
 						<exclude>
-							<groupId>org.projectlombok</groupId>
+							<groupId>org.project-lombok</groupId>
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>

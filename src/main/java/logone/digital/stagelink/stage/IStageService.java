@@ -5,13 +5,18 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IStageService {
-    StageDto create(StageDto stage);
+    StageDto create(StageEntity stage);
 
     List<StageDto> readAll();
-    StageDto readOneById(Long id);
+    //StageDto readOneByDomaine(String domaine);
 
     StageDto update(StageDto stage);
 
-    void deleteOneById(Long id);
+    //void deleteOneById(Long id);
     void deleteOne(StageDto stage);
+
+    StageEntity readOneByDomaine(String domaine);
+
+    String deleteOneById(Long id);
+
 }

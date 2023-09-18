@@ -28,7 +28,7 @@ public class UserEntity implements Serializable {
     @Column(name = "nom")
     private String nom;
 
-    @Column(name = "numméro-de-telephone")
+    @Column(name = "numéro-de-telephone")
     private String telephone;
 
     @NaturalId(mutable = true)

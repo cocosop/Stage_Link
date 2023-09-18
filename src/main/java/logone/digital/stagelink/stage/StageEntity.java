@@ -35,7 +35,7 @@ public class StageEntity implements Serializable {
     private String description;
 
     @Column
-    private String entreprise;
+    private String nomEntreprise;
 
     @Column
     private String domaine;
@@ -59,11 +59,12 @@ public class StageEntity implements Serializable {
 
     @JsonIgnore
     @ManyToMany
-    private Set<EtudiantEntity> etudiant;
+    private Set<EtudiantEntity> etudiants;
 
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "postulation_id")
     private PostulationEntity postulation;
+
 }

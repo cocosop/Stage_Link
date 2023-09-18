@@ -5,9 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import logone.digital.stagelink.stage.StageEntity;
 import lombok.*;
+import org.hibernate.annotations.NaturalId;
+
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Set;
 
 @Entity
@@ -26,13 +29,33 @@ public class EntrepriseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "nom_entreprise")
+    private String nom;
+
     @Column
     private String responsable;
 
+    @Column(name = "numméro-de-telephone")
+    private String telephone;
 
-    @JsonIgnore
+    @NaturalId(mutable = true)
+    @Column(name = "email")
+    private String email;
+
+    @Column
+    private String adresse;
+
+    @Column(name = "mot-de-passe")
+    private String motDePasse;
+
+    @Column
+    private Instant dateInscription;
+
+    @Column(name = "etat-compte")
+    private boolean active;
+
+    // @JsonIgnore
     @OneToMany(mappedBy = "entreprise1", cascade = CascadeType.ALL)
     private Set<StageEntity> stage;
-
 
 }

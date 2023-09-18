@@ -2,7 +2,11 @@ package logone.digital.stagelink.stage;
 
 
 import jakarta.validation.Valid;
+import logone.digital.stagelink.etudiant.EtudiantDto;
+import logone.digital.stagelink.etudiant.EtudiantEntity;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,10 +22,9 @@ public class StageController {
     //POST http://localhost:8080/stage-link/api/v1/stages/ajouter
     @PostMapping(path = "/ajouter")
     @ResponseBody
-    public StageDto ajouterStages(@RequestBody @Valid StageDto stage)
+    ResponseEntity<StageDto> ajouterStage(@RequestBody @Valid StageEntity stage)
     {
-        return stageService.
-                create(stage);
+        return new ResponseEntity<>(stageService.create(stage), HttpStatus.CREATED);
     }
 
 

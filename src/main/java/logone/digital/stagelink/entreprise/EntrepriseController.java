@@ -3,6 +3,8 @@ package logone.digital.stagelink.entreprise;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -16,10 +18,9 @@ public class EntrepriseController {
     //POST http://localhost:8080/stage-link/api/v1/entreprises/ajouter
     @PostMapping(path = "/ajouter")
     @ResponseBody
-    public EntrepriseDto ajouterEntreprises(@RequestBody @Valid EntrepriseDto entreprise)
+    public ResponseEntity<EntrepriseDto> ajouterEntreprises(@RequestBody @Valid EntrepriseEntity entreprise)
     {
-        return entrepriseService.
-                create(entreprise);
+       return new ResponseEntity<>(entrepriseService.create(entreprise),HttpStatus.CREATED);
     }
 
     //PUT http://localhost:8080/stage-link/api/v1/entreprises/modifier
@@ -48,6 +49,14 @@ public class EntrepriseController {
     (@PathVariable("idEntreprises") Long id)
     {
         entrepriseService.deleteOneById(id);
+    }
+
+    //http://localhost:8080/stage-link/api/v1/entreprises/recuperer/1
+    @GetMapping(path = "/recuperer/{idEntreprises}")
+    @ResponseBody
+    public EntrepriseDto recupererEntreprise(@PathVariable("idEntreprises") Long id)
+    {
+        return entrepriseService.readOneById(id);
     }
 
 

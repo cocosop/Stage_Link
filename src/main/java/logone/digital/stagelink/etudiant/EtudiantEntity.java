@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import logone.digital.stagelink.postulation.PostulationEntity;
 import logone.digital.stagelink.stage.StageEntity;
 import lombok.*;
+import org.hibernate.annotations.NaturalId;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -27,6 +28,9 @@ public class EtudiantEntity implements Serializable {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
+        @Column(name = "nom_etudiant")
+        private String nom;
+
         @Column
         private String prenom;
 
@@ -42,15 +46,36 @@ public class EtudiantEntity implements Serializable {
         @Column
         private String parcoursAcademique;
 
+        @Column(name = "numméro-de-telephone")
+        private String telephone;
+
+        @NaturalId(mutable = true)
+        @Column(name = "email")
+        private String email;
+
+        @Column
+        private String adresse;
+
+        @Column(name = "mot-de-passe")
+        private String motDePasse;
+
+        @Column
+        private Instant dateInscription;
+
+        @Column(name = "etat-compte")
+        private boolean active;
 
 
-        @JsonIgnore
-        @ManyToMany(cascade = CascadeType.ALL, mappedBy="etudiant")
-        private Set<StageEntity> stageEntities;
 
-        @JsonIgnore
-        @OneToMany(mappedBy = "etudiant")
-        private Set<PostulationEntity> postulationEntities;
+        //@JsonIgnore
+        @ManyToMany(mappedBy = "etudiants",cascade = CascadeType.ALL)
+        private Set<StageEntity> stage;
+
+        //@JsonIgnore
+        @OneToMany(mappedBy = "etudiant2", cascade = CascadeType.ALL)
+        private Set<PostulationEntity> postulation;
+
+
 
 
 }

@@ -2,7 +2,11 @@ package logone.digital.stagelink.postulation;
 
 
 import jakarta.validation.Valid;
+import logone.digital.stagelink.entreprise.EntrepriseDto;
+import logone.digital.stagelink.entreprise.EntrepriseEntity;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,10 +22,9 @@ public class PostulationController {
     //POST http://localhost:8080/stage-link/api/postulations/ajouter
     @PostMapping(path = "/ajouter")
     @ResponseBody
-    public PostulationDto ajouterPostulation(@RequestBody @Valid PostulationDto postulation)
+    public ResponseEntity<PostulationDto> ajouterPostulations(@RequestBody @Valid PostulationEntity postulation)
     {
-        return postulationServive.
-                create(postulation);
+        return new ResponseEntity<>(postulationServive.create(postulation), HttpStatus.CREATED);
     }
 
 

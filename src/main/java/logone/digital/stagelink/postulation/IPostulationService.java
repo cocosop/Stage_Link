@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IPostulationService {
-    PostulationDto create(PostulationDto postulation);
+    PostulationDto create(PostulationEntity postulation);
 
     List<PostulationDto> readAll();
     PostulationDto readOneById(Long id);

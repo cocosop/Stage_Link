@@ -3,6 +3,7 @@ package logone.digital.stagelink.postulation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 //import logone.digital.stagelink.etudiant.EtudiantEntity;
+import logone.digital.stagelink.entreprise.EntrepriseEntity;
 import logone.digital.stagelink.etudiant.EtudiantEntity;
 
 import logone.digital.stagelink.stage.StageEntity;
@@ -35,15 +36,21 @@ public class PostulationEntity implements Serializable {
     @Column
     private Boolean statut;
 
+    @Column
+    private Long code;
+
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "etudiant_id")
-    private EtudiantEntity etudiant;
+    @JoinColumn(name = "postulation_id")
+    private EtudiantEntity etudiant2;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "postulation")
+
+    //@JsonIgnore
+    @OneToMany(mappedBy = "postulation", cascade = CascadeType.ALL)
     private Set<StageEntity> stage;
+
+
 
 
 

@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public interface IEtudiantService {
 
-    EtudiantDto create(EtudiantDto etudiant);
+    EtudiantDto create(EtudiantEntity etudiant);
 
     List<EtudiantDto> readAll();
 
@@ -13,9 +13,11 @@ public interface IEtudiantService {
 
     EtudiantDto update(EtudiantDto etudiant);
 
-    void deleteOneById(Long id);
+    //void deleteOneById(Long id);
 
     void deleteOne(EtudiantDto etudiant);
+
+    public String deleteOneById(Long id);
 
 
 }

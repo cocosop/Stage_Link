@@ -26,7 +26,7 @@ public class UserService implements IUserService{
         Optional<UserEntity> theUser= userRepository.findByEmail(user.getEmail());
         if (theUser.isPresent()){
             throw new UserExistException("User with this email already exist");
-        }
+       }
 
         return  UserDto.toDto(
                 userRepository.save(UserDto.toEntity(user)));
