@@ -49,7 +49,7 @@ public class UserDto {
                 .adresse(user.getAdresse())
                 .motDePasse(user.getMotDePasse())
                 .dateInscription(user.getDateInscription())
-                .active(user.isActive())
+
                 .roles(user.getRoles())
                 .build();
     }
@@ -71,7 +71,7 @@ public class UserDto {
                 .adresse(userDto.getAdresse())
                 .motDePasse(userDto.getMotDePasse())
                 .dateInscription(userDto.getDateInscription())
-                .active(userDto.isActive())
+
                 .roles(userDto.getRoles())
                 .build();
     }

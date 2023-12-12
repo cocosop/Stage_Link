@@ -18,9 +18,9 @@ public class EntrepriseController {
     //POST http://localhost:8080/stage-link/api/v1/entreprises/ajouter
     @PostMapping(path = "/ajouter")
     @ResponseBody
-    public ResponseEntity<EntrepriseDto> ajouterEntreprises(@RequestBody @Valid EntrepriseEntity entreprise)
+    public ResponseEntity<EntrepriseDto> ajouterEntreprises(@RequestBody @Valid EntrepriseDto entrepriseDto)
     {
-       return new ResponseEntity<>(entrepriseService.create(entreprise),HttpStatus.CREATED);
+       return new ResponseEntity<>(entrepriseService.create(entrepriseDto),HttpStatus.CREATED);
     }
 
     //PUT http://localhost:8080/stage-link/api/v1/entreprises/modifier

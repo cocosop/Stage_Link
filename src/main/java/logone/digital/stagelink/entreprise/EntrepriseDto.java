@@ -3,6 +3,7 @@ package logone.digital.stagelink.entreprise;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
+import logone.digital.stagelink.stage.StageEntity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
 
 import java.time.Instant;
+import java.util.Set;
 
 @Data
 @Builder
@@ -32,6 +34,7 @@ public class EntrepriseDto {
     private String motDePasse;
     @NotNull(message = "Le date d'inscription est obligatoire")
     private Instant dateInscription;
+    private Set<StageEntity> stage;
 
     public static EntrepriseEntity toEntity(EntrepriseDto entrepriseDto) {
 

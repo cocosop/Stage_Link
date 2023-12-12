@@ -63,9 +63,7 @@ public class EtudiantEntity implements Serializable {
         private Instant dateInscription;
 
         @Column(name = "etat-compte")
-        private boolean active;
-
-
+        private boolean statut;
 
         //@JsonIgnore
         @ManyToMany(mappedBy = "etudiants",cascade = CascadeType.ALL)

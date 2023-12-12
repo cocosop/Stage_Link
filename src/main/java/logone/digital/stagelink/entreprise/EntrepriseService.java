@@ -4,6 +4,7 @@ import logone.digital.stagelink.user.UserDto;
 import logone.digital.stagelink.user.UserEntity;
 import logone.digital.stagelink.user.UserExistException;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -16,7 +17,10 @@ public class EntrepriseService implements IEntrepriseService{
 
     final EntrepriseRepository entrepriseRepository;
 
-    @Override
+
+    final EntrepriseMapper entrepriseMapper;
+
+    /*@Override
     public EntrepriseDto create(EntrepriseEntity entreprise) {
 
         Optional<EntrepriseEntity> theEntreprise = entrepriseRepository.findByEmail(entreprise.getEmail());
@@ -27,7 +31,7 @@ public class EntrepriseService implements IEntrepriseService{
         return  EntrepriseDto.toDto(
                 entrepriseRepository.save(entreprise));
 
-    }
+    }*/
 
        /* EntrepriseEntity existingEntreprise
                 = entrepriseRepository.findByEmail(entreprise.getEmail())
@@ -40,6 +44,31 @@ public class EntrepriseService implements IEntrepriseService{
             throw new EntrepriseAlreadyExistsException(
                     "Customer already exists!!");*/
 
+
+
+    public EntrepriseDto create(EntrepriseDto entrepriseDto) {
+        // Vérifiez si un auteur existe déjà avec le même nom
+        Optional<EntrepriseEntity> theEntreprise = entrepriseRepository.findByEmail(entrepriseDto.getEmail());
+        if (theEntreprise.isPresent()){
+            throw new EntrepriseAlreadyExistsException("Entreprise with this email already exist");
+        }
+
+        EntrepriseEntity entreprise = this.entrepriseMapper.entrepriseDtoVersEntreprise(entrepriseDto);
+        EntrepriseEntity entrepriseEnregistre = entrepriseRepository.save(entreprise);
+        return this.entrepriseMapper.entrepriseVersEntrepriseDto(this.entrepriseRepository.save(entreprise));
+    }
+
+    /*public AuteurDTO ajouterAuteur(AuteurDTO auteurDTO) {
+        // Vérifiez si un auteur existe déjà avec le même nom
+        String nomAuteur = auteurDTO.getNom();
+        if (auteurRepository.existsByNom(nomAuteur)) {
+            throw new AuteurAlreadyExistsException("L'auteur avec le nom '" + nomAuteur + "' existe déjà.");
+        }
+
+        Auteur auteur = auteurMapper.auteurDTOVersAuteur(auteurDTO);
+        Auteur auteurEnregistre = auteurRepository.save(auteur);
+        return auteurMapper.auteurVersAuteurDTO(auteurEnregistre);
+    }*/
 
 
 

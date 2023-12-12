@@ -45,7 +45,7 @@ public class UserEntity implements Serializable {
     private Instant dateInscription;
 
     @Column(name = "etat-compte")
-    private boolean active;
+    private boolean statut;
 
     @Column(name = "roles")
     private String roles;

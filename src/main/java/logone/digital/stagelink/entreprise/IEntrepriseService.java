@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface IEntrepriseService {
 
-    EntrepriseDto create(EntrepriseEntity entreprise);
+    //EntrepriseDto create(EntrepriseEntity entreprise);
+    EntrepriseDto create(EntrepriseDto entrepriseDto);
 
     List<EntrepriseDto> readAll();
 

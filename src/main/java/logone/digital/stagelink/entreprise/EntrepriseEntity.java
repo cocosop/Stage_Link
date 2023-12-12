@@ -55,7 +55,7 @@ public class EntrepriseEntity implements Serializable {
     private boolean active;
 
     // @JsonIgnore
-    @OneToMany(mappedBy = "entreprise1", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "entreprise1", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<StageEntity> stage;
 
 }

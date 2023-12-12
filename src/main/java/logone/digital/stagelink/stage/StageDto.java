@@ -37,6 +37,7 @@ public class StageDto {
         }
 
         return StageEntity.builder()
+
                 .id(stageDto.getId())
                 .nomEntreprise(stageDto.getNomEntreprise())
                 .titre(stageDto.getTitre())

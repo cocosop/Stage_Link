@@ -39,7 +39,7 @@ public class EtudiantDto {
     @NotNull(message = "La date d'inscription est obligatoire")
     private Instant dateInscription;
 
-    private boolean active;
+    private boolean statut;
 
     public void message(){
 

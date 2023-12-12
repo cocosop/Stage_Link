@@ -50,8 +50,6 @@ public class StageEntity implements Serializable {
     private Instant dateFin;
 
 
-
-
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "entreprise_id")

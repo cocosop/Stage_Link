@@ -21,10 +21,10 @@ public class StageService implements IStageService {
     @Override
     public StageDto create(StageEntity stage) {
 
-        Optional<StageEntity> theStage= stageRepository.findById(stage.getId());
+        /*Optional<StageEntity> theStage= stageRepository.findById(stage.getId());
         if (theStage.isPresent()){
             throw new StageAlreadyExistException("Stage with this id already exist");
-        }
+        }*/
 
         return  StageDto.toDto(
                 stageRepository.save(stage));
