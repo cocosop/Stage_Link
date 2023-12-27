@@ -1,9 +1,14 @@
 package logone.digital.stagelink.stage;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Optional;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface StageRepository extends JpaRepository<StageEntity, Long> {
-    Optional<Object> findByDomaine(String domaine);
+//    Optional<StageEntity> findById(Long id);
+
+
+    @Query(value = "SELECT * FROM _stage WHERE nom_entreprise =:nom", nativeQuery = true)
+    StageEntity findStagesByNomEntreprise(@Param("nom") String nomEntreprise);
+
 }

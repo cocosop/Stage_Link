@@ -1,8 +1,7 @@
 package logone.digital.stagelink.exception;
 
-import logone.digital.stagelink.user.UserExistException;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -26,13 +25,13 @@ public class ExceptionHandling {
         return errorMap;
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(UserExistException.class)
-    public Map<String, String> handleUserExistException(UserExistException ex) {
-        Map<String, String> errorMap = new HashMap<>();
-        errorMap.put("errorMessage", ex.getMessage());
-        return errorMap;
-    }
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ExceptionHandler(UserExistException.class)
+//    public Map<String, String> handleUserExistException(UserExistException ex) {
+//        Map<String, String> errorMap = new HashMap<>();
+//        errorMap.put("errorMessage", ex.getMessage());
+//        return errorMap;
+//    }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(NoSuchElementException.class)
@@ -42,11 +41,11 @@ public class ExceptionHandling {
         return errorMap;
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(UsernameNotFoundException.class)
-    public Map<String, String> handleUsernameNotFound(UsernameNotFoundException ex) {
-        Map<String, String> errorMap = new HashMap<>();
-        errorMap.put("errorMessage", ex.getMessage());
-        return errorMap;
-    }
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ExceptionHandler(UsernameNotFoundException.class)
+//    public Map<String, String> handleUsernameNotFound(UsernameNotFoundException ex) {
+//        Map<String, String> errorMap = new HashMap<>();
+//        errorMap.put("errorMessage", ex.getMessage());
+//        return errorMap;
+//    }
 }

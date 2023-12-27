@@ -1,36 +1,27 @@
 package logone.digital.stagelink.entreprise;
-
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import logone.digital.stagelink.stage.StageEntity;
+import logone.digital.stagelink.user.UserEntity;
 import lombok.*;
-import org.hibernate.annotations.NaturalId;
-
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "_entreprise")
-@Builder
-public class EntrepriseEntity implements Serializable {
+@Table(name = "_entreprise", indexes = {@Index(name = "index_nom_entreprise", columnList = "nom_entreprise")})
+public class EntrepriseEntity extends UserEntity {
 
-    @Serial
-    private static final  long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @Column(name = "nom_entreprise")
-    private String nom;
+    private String nomEntreprise;
 
     @Column
     private String responsable;
@@ -38,24 +29,17 @@ public class EntrepriseEntity implements Serializable {
     @Column(name = "numméro-de-telephone")
     private String telephone;
 
-    @NaturalId(mutable = true)
-    @Column(name = "email")
-    private String email;
-
     @Column
     private String adresse;
-
-    @Column(name = "mot-de-passe")
-    private String motDePasse;
 
     @Column
     private Instant dateInscription;
 
     @Column(name = "etat-compte")
-    private boolean active;
+    private String statut;
 
-    // @JsonIgnore
-    @OneToMany(mappedBy = "entreprise1", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<StageEntity> stage;
+//  @JsonIgnore
+//    @OneToMany(mappedBy = "entreprise", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    private List<StageEntity> stage  =  new ArrayList<>();
 
 }

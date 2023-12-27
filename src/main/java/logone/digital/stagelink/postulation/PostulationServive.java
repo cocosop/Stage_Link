@@ -1,12 +1,6 @@
 package logone.digital.stagelink.postulation;
-
-
-import logone.digital.stagelink.etudiant.EtudiantAlreadyExistException;
-import logone.digital.stagelink.etudiant.EtudiantDto;
-import logone.digital.stagelink.etudiant.EtudiantEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -20,16 +14,28 @@ public class PostulationServive implements IPostulationService {
     //Ici nous avons remplacer le constructeur avec @AllArgsConstructor de lombok
     //qui genere le constructeur lors de l'execution pour éviter le boilerplate du code
 
-    @Override
-    public PostulationDto create(PostulationEntity postulation) {
+//    @Override
+//    public PostulationDto create(PostulationEntity postulation) {
+//
+//        Optional<PostulationEntity> thePostulant= postulationRepository.findByCode(postulation.getCode());
+//        if (thePostulant.isPresent()){
+//            throw new PostulationAlreadyExistsException("Postulant with this email already exist");
+//        }
+//
+//        return  PostulationDto.toDto(
+//                postulationRepository.save(postulation));
+//    }
 
-        Optional<PostulationEntity> thePostulant= postulationRepository.findByCode(postulation.getCode());
+    @Override
+    public PostulationDto create(PostulationEntity postulant) {
+
+        Optional<PostulationEntity> thePostulant= postulationRepository.findById(postulant.getIdPostulation());
         if (thePostulant.isPresent()){
-            throw new PostulationAlreadyExistsException("Postulant with this email already exist");
+            throw new PostulationAlreadyExistsException("Postulation with this id already exist");
         }
 
         return  PostulationDto.toDto(
-                postulationRepository.save(postulation));
+                postulationRepository.save(postulant));
     }
 
     @Override

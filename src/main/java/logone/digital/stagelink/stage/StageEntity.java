@@ -12,13 +12,13 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Set;
 
+
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "_stage")
-@Builder
 public class StageEntity implements Serializable {
 
     @Serial
@@ -27,42 +27,24 @@ public class StageEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column
     private String titre;
-
-    @Column
     private String description;
-
-    @Column
-    private String nomEntreprise;
-
-    @Column
-    private String domaine;
-
-    @Column
     private String localisation;
-
-    @Column
     private Instant dateDebut;
-
-    @Column
     private Instant dateFin;
 
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "entreprise_id")
-    private EntrepriseEntity entreprise1;
-
-    @JsonIgnore
-    @ManyToMany
-    private Set<EtudiantEntity> etudiants;
+    @ManyToOne(targetEntity = EntrepriseEntity.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "nom_entreprise", referencedColumnName = "nom_entreprise", foreignKey = @ForeignKey(name = "FKetbkxhwwtp3ktu4v3oxfwkn9"))
+    private EntrepriseEntity entreprise;
 
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "postulation_id")
-    private PostulationEntity postulation;
+
+//    @JsonIgnore
+//    @ManyToMany
+//    private Set<EtudiantEntity> etudiants;
+//
+//    @OneToMany(mappedBy = "stage", cascade = CascadeType.ALL)
+//    private Set<PostulationEntity> postulation;
 
 }

@@ -28,30 +28,28 @@ public class PostulationEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idPostulation;
 
     @Column
     private Instant datePostulation;
 
     @Column
-    private Boolean statut;
-
-    @Column
-    private Long code;
-
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "postulation_id")
-    private EtudiantEntity etudiant2;
+    private String statut;
 
 
     //@JsonIgnore
-    @OneToMany(mappedBy = "postulation", cascade = CascadeType.ALL)
-    private Set<StageEntity> stage;
+    //@ManyToOne
+   // @JoinColumn(name = "etudiant_id")
+   // private EtudiantEntity etudiant2;
 
 
 
+
+
+   // @JsonIgnore
+    //@ManyToOne
+    //@JoinColumn(name = "stage_id")
+    //private StageEntity stage;
 
 
 }

@@ -2,8 +2,6 @@ package logone.digital.stagelink.postulation;
 
 
 import jakarta.validation.Valid;
-import logone.digital.stagelink.entreprise.EntrepriseDto;
-import logone.digital.stagelink.entreprise.EntrepriseEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +17,7 @@ public class PostulationController {
     final PostulationServive postulationServive;
 
 
-    //POST http://localhost:8080/stage-link/api/postulations/ajouter
+    //POST http://localhost:8089/stage-link/api/v1//postulations/ajouter
     @PostMapping(path = "/ajouter")
     @ResponseBody
     public ResponseEntity<PostulationDto> ajouterPostulations(@RequestBody @Valid PostulationEntity postulation)
@@ -28,7 +26,7 @@ public class PostulationController {
     }
 
 
-    //PUT http://localhost:8080/stage-link/api/v1/postulations/modifier
+    //PUT http://localhost:8089/stage-link/api/v1/postulations/modifier
     @PutMapping(path = "/modifier")
     @ResponseBody
     public PostulationDto modifierPostulation(@RequestBody  @Valid  PostulationDto postulation){
@@ -37,17 +35,23 @@ public class PostulationController {
                 update(postulation);
     }
 
-    //GET http://localhost:8080/stage-link/api/v1/postulations/recuperer-tous
+    //GET http://localhost:8089/stage-link/api/v1/postulations/recuperer-tous
     @GetMapping(path = "/recuperer-tous")
     @ResponseBody
     public List<PostulationDto> recupererPostulation()
     {
         return postulationServive.readAll();
     }
+    //GET by id http://localhost:8089/stage-link/api/v1/postulations/recuperer/1
+    @GetMapping(path = "/recuperer/{idPostulation}")
+    @ResponseBody
+    public PostulationDto recupererPostulation(@PathVariable("idPostulation") Long id)
+    {
+        return postulationServive.readOneById(id);
+    }
 
 
-
-    // DELETE http://localhost:8080/stage-link/api/v1/postulation/supprimer/1
+    // DELETE http://localhost:8089/stage-link/api/v1/postulations/supprimer/1
     @DeleteMapping(path = "/supprimer/{idPostulations}")
     @ResponseBody
     public void supprimerPostulation

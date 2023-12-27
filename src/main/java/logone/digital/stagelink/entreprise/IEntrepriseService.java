@@ -1,23 +1,20 @@
 package logone.digital.stagelink.entreprise;
 
-import logone.digital.stagelink.entreprise.EntrepriseDto;
-
 import java.util.List;
 
 public interface IEntrepriseService {
 
-    //EntrepriseDto create(EntrepriseEntity entreprise);
-    EntrepriseDto create(EntrepriseDto entrepriseDto);
 
-    List<EntrepriseDto> readAll();
+    EntrepriseDtoResponse create(EntrepriseDtoRequest entreprise);
+    List<EntrepriseDtoResponse> readAll();
 
-    EntrepriseDto readOneById(Long id);
-
-    EntrepriseDto update(EntrepriseDto entreprise);
+    EntrepriseDtoResponse readOneByEmail(String email);
+//
+    EntrepriseDtoResponse update(EntrepriseDtoRequest entreprise, String email);
 
     //void deleteOneById(Long id);
 
-    public String deleteOneById(Long id);
+//    public String deleteOneById(Long id);
 
-    void deleteOne(EntrepriseDto entreprise);
+    void deleteOne(String email);
 }

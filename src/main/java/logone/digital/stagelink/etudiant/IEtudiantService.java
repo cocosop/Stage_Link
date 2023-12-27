@@ -1,23 +1,23 @@
 package logone.digital.stagelink.etudiant;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IEtudiantService {
 
-    EtudiantDto create(EtudiantEntity etudiant);
+    EtudiantDtoResponse create(EtudiantDtoRequest etudiant);
 
-    List<EtudiantDto> readAll();
+    List<EtudiantDtoResponse> readAll();
 
-    EtudiantDto readOneById(Long id);
+    EtudiantDtoResponse readOneByEmail(String email);
 
-    EtudiantDto update(EtudiantDto etudiant);
+    EtudiantDtoResponse update(EtudiantDtoRequest etudiant, String email);
 
     //void deleteOneById(Long id);
 
-    void deleteOne(EtudiantDto etudiant);
+    void deleteOne(String email);
 
-    public String deleteOneById(Long id);
+
+
 
 
 }

@@ -1,114 +1,110 @@
 package logone.digital.stagelink.entreprise;
 
-import logone.digital.stagelink.user.UserDto;
-import logone.digital.stagelink.user.UserEntity;
-import logone.digital.stagelink.user.UserExistException;
+import jakarta.transaction.Transactional;
+import logone.digital.stagelink.etudiant.EtudiantAlreadyExistException;
+import logone.digital.stagelink.etudiant.EtudiantEntity;
+import logone.digital.stagelink.stage.StageEntity;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.ErrorResponseException;
+
+
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class EntrepriseService implements IEntrepriseService{
-
     final EntrepriseRepository entrepriseRepository;
-
-
     final EntrepriseMapper entrepriseMapper;
+    final PasswordEncoder passwordEncoder;
 
-    /*@Override
-    public EntrepriseDto create(EntrepriseEntity entreprise) {
-
-        Optional<EntrepriseEntity> theEntreprise = entrepriseRepository.findByEmail(entreprise.getEmail());
-        if (theEntreprise.isPresent()){
-            throw new EntrepriseAlreadyExistsException("Entreprise with this email already exist");
-        }
-
-        return  EntrepriseDto.toDto(
-                entrepriseRepository.save(entreprise));
-
-    }*/
-
-       /* EntrepriseEntity existingEntreprise
-                = entrepriseRepository.findByEmail(entreprise.getEmail())
-                .orElse(null);
-        if (existingEntreprise == null) {
-            EntrepriseEntity savedEntreprise = entrepriseRepository.save(entreprise);
-          return EntrepriseDto.toDto(savedEntreprise);
-        }
-        else
-            throw new EntrepriseAlreadyExistsException(
-                    "Customer already exists!!");*/
-
-
-
-    public EntrepriseDto create(EntrepriseDto entrepriseDto) {
-        // Vérifiez si un auteur existe déjà avec le même nom
-        Optional<EntrepriseEntity> theEntreprise = entrepriseRepository.findByEmail(entrepriseDto.getEmail());
-        if (theEntreprise.isPresent()){
-            throw new EntrepriseAlreadyExistsException("Entreprise with this email already exist");
-        }
-
-        EntrepriseEntity entreprise = this.entrepriseMapper.entrepriseDtoVersEntreprise(entrepriseDto);
-        EntrepriseEntity entrepriseEnregistre = entrepriseRepository.save(entreprise);
-        return this.entrepriseMapper.entrepriseVersEntrepriseDto(this.entrepriseRepository.save(entreprise));
+    public String generateRole(){
+        String role = "ENTREPRISE";
+        return  role;
     }
 
-    /*public AuteurDTO ajouterAuteur(AuteurDTO auteurDTO) {
-        // Vérifiez si un auteur existe déjà avec le même nom
-        String nomAuteur = auteurDTO.getNom();
-        if (auteurRepository.existsByNom(nomAuteur)) {
-            throw new AuteurAlreadyExistsException("L'auteur avec le nom '" + nomAuteur + "' existe déjà.");
-        }
-
-        Auteur auteur = auteurMapper.auteurDTOVersAuteur(auteurDTO);
-        Auteur auteurEnregistre = auteurRepository.save(auteur);
-        return auteurMapper.auteurVersAuteurDTO(auteurEnregistre);
-    }*/
-
-
-
-    @Override
-    public List<EntrepriseDto> readAll() {
-        return entrepriseRepository.findAll().stream()
-                .map(EntrepriseDto::toDto)
-                .collect(Collectors.toList());
+    public Instant generateDate(){
+        Instant today = Instant.now();
+        return  today;
     }
 
     @Override
-    public EntrepriseDto readOneById(Long id) {
-        return EntrepriseDto.toDto(entrepriseRepository.findById(id)
-                .orElseThrow(()->new NoSuchElementException("Entreprise not exist")));
+    public EntrepriseDtoResponse create(EntrepriseDtoRequest entreprise) {
+        Optional<EntrepriseEntity> entrepriseEntity = this.entrepriseRepository.findByEmail(entreprise.getEmail());
+        entreprise.setMotDePasse(this.passwordEncoder.encode(entreprise.getNomEntreprise()));
+        entreprise.setRoles(this.generateRole());
+        entreprise.setDateInscription(this.generateDate());
+        EntrepriseEntity entreprise1 = this.entrepriseMapper.entrepriseDtoVersEntreprise(entreprise);
+        if (entrepriseEntity.isPresent()){
+            throw new EntrepriseAlreadyExistsException("Entreprise with this email already exist !!!");
+        }
+        return this.entrepriseMapper.entrepriseVersEntrepriseDto(this.entrepriseRepository.save(entreprise1));
     }
 
     @Override
-    public EntrepriseDto update(EntrepriseDto entreprise) {
-        return EntrepriseDto.toDto(
-                entrepriseRepository.save(EntrepriseDto.toEntity(entreprise)));
-    }
-
-   // @Override
-    //public void deleteOneById(Long id) {
-        //entrepriseRepository.deleteById(id);    }
+    public List<EntrepriseDtoResponse> readAll() {
+        List<EntrepriseEntity> entreprise = (List<EntrepriseEntity>) this.entrepriseRepository.findAll();
+        List<EntrepriseDtoResponse> entrepriseResponse = new ArrayList<>();
+        entreprise.forEach(entreprise1 -> entrepriseResponse.add(this.entrepriseMapper.entrepriseVersEntrepriseDto(entreprise1)));
+        return entrepriseResponse; }
 
     @Override
-    public void deleteOne(EntrepriseDto entreprise) {
-        entrepriseRepository.delete(EntrepriseDto.toEntity(entreprise));
-    }
-
-    @Override
-    public String deleteOneById(Long id) {
-        if(entrepriseRepository.existsById(id)){
-            entrepriseRepository.deleteById(id);
-            return "Delete with success";
-        }else {
-            throw new NoSuchElementException("No User with that Id");
+    public EntrepriseDtoResponse readOneByEmail(String email) {
+        try {
+            return this.entrepriseMapper.entrepriseVersEntrepriseDto(this.entrepriseRepository.findByEmail(email).get());
+        }catch (Exception ex){
+            throw new EntrepriseAlreadyExistsException("This email " +email+ " doesn't exist in our data base");
         }
     }
+
+    @Override
+    public EntrepriseDtoResponse update(EntrepriseDtoRequest entreprise, String email) throws EntrepriseAlreadyExistsException {
+        try {
+            // Recherche l'entité par email
+            EntrepriseEntity entrepriseEntity = this.entrepriseRepository.findByEmail(email)
+                    .orElseThrow(() -> new Error ("This email " + email + " doesn't exist in our data base"));
+
+            // Mappe la requête sur l'entité
+            EntrepriseEntity entreprise1 = this.entrepriseMapper.entrepriseDtoVersEntreprise(entreprise);
+            // Conserve l'id, les rôles, la date d'inscription et le statut de l'entité originale
+            entreprise1.setDateInscription(entrepriseEntity.getDateInscription());
+            entreprise1.setId(entrepriseEntity.getId());
+            entreprise1.setRoles(entrepriseEntity.getRoles());
+            entreprise1.setStatut(entrepriseEntity.getStatut());
+            // Sauvegarde l'entité modifiée
+            return this.entrepriseMapper.entrepriseVersEntrepriseDto(this.entrepriseRepository.save(entreprise1));
+        } catch (EntrepriseAlreadyExistsException e) {
+            // Relance les exceptions personnalisées
+            throw e;
+        } catch (Exception e) {
+            // Traite les autres exceptions
+            e.printStackTrace();
+            // Retourne null ou une réponse par défaut
+            return null;
+        }
+    }
+
+    @Transactional
+    @Override
+    public void deleteOne(String email) {
+        Optional<EntrepriseEntity> entrepriseEntity = this.entrepriseRepository.findByEmail(email);
+        if (entrepriseEntity.isEmpty()){
+            throw new EntrepriseAlreadyExistsException("This email " +email+ " doesn't exist in our data base");
+        }
+        this.entrepriseRepository.deleteByEmail(email);
+
+    }
+
+
+
+
 }
 
 

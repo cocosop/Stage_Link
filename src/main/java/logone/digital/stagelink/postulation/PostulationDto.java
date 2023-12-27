@@ -11,13 +11,11 @@ import java.time.Instant;
 @Builder
 public class PostulationDto {
 
-    private Long id;
+    private Long idPostulation;
     @NotNull(message = "La date de postulation est obligatoire")
     private Instant datePostulation;
     @NotNull(message = "Le statut est obligatoire")
-    private Boolean statut;
-    @NotNull(message = "Le code est obligatoire")
-    private Long code;
+    private String statut;
 
     public  static PostulationEntity toEntity(PostulationDto postulationDto){
 
@@ -26,10 +24,9 @@ public class PostulationDto {
         }
 
         return PostulationEntity.builder()
-                .id(postulationDto.getId())
+                .idPostulation(postulationDto.getIdPostulation())
                 .datePostulation(postulationDto.getDatePostulation())
                 .statut(postulationDto.getStatut())
-                .code(postulationDto.getCode())
                 .build();
     }
 
@@ -40,10 +37,9 @@ public class PostulationDto {
         }
 
         return PostulationDto.builder()
-                .id(postulation.getId())
+                .idPostulation(postulation.getIdPostulation())
                 .datePostulation(postulation.getDatePostulation())
                 .statut(postulation.getStatut())
-                .code(postulation.getCode())
                 .build();
     }
 }

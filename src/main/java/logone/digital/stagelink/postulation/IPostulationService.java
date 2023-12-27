@@ -11,5 +11,7 @@ public interface IPostulationService {
     PostulationDto update(PostulationDto postulation);
 
     void deleteOneById(Long id);
+
+    //    void deleteOneById(Long id);
     void deleteOne(PostulationDto postulation);
 }
