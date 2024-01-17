@@ -1,24 +1,22 @@
 package logone.digital.stagelink.etudiant;
 import jakarta.persistence.*;
-import logone.digital.stagelink.user.UserEntity;
+import logone.digital.stagelink.user.User;
 import lombok.*;
-import java.io.Serial;
-import java.io.Serializable;
 import java.time.Instant;
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "_etudiant")
-public class EtudiantEntity extends UserEntity {
+@Table(name = "_etudiant", indexes = {@Index(name = "index_nom_etudiant", columnList = "nomEtudiant")})
+public class EtudiantEntity extends User {
 
 
-        @Column(name = "nom_etudiant")
-        private String nom;
+        @Column(name = "nomEtudiant")
+        private String nomEtudiant;
 
         @Column
-        private String prenom;
+        private String prenomEtudiant;
 
         @Column
         private String competences;
@@ -36,10 +34,14 @@ public class EtudiantEntity extends UserEntity {
         private String adresse;
 
         @Column
+        private String cv;
+
+        @Column
         private Instant dateInscription;
 
         @Column(name = "etat-compte")
         private String  statut;
+
 
 
 

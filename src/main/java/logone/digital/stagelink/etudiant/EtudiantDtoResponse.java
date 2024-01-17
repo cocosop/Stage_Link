@@ -14,23 +14,17 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EtudiantDtoResponse  {
-
-    private Long id;
-    private String nom;
-    private String prenom;
+    private String nomEtudiant;
+    private String prenomEtudiant;
     private String competences;
     private String interets;
     private String parcoursAcademique;
     private String telephone;
     private String adresse;
-    private String motDePasse;
+    private String password;
     private Instant dateInscription;
-    private String statut;
+    private String cv;
     private String email;
-    private String roles;
-
-
-
 //    public  static EtudiantEntity toEntity(EtudiantDto etudiantDto) {
 //
 //        if (etudiantDto == null) {

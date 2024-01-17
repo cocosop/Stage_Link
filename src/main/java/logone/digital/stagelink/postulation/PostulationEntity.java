@@ -20,36 +20,25 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "_postulation")
-@Builder
 public class PostulationEntity implements Serializable {
 
     @Serial
     private static final  long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPostulation;
-
-    @Column
     private Instant datePostulation;
-
-    @Column
     private String statut;
 
+    @ManyToOne(targetEntity = EtudiantEntity.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "email", referencedColumnName = "email", foreignKey =
+    @ForeignKey(name = "FK_etudiant"))
+    private EtudiantEntity etudiant;
 
-    //@JsonIgnore
-    //@ManyToOne
-   // @JoinColumn(name = "etudiant_id")
-   // private EtudiantEntity etudiant2;
-
-
-
-
-
-   // @JsonIgnore
-    //@ManyToOne
-    //@JoinColumn(name = "stage_id")
-    //private StageEntity stage;
+    @ManyToOne(targetEntity = StageEntity.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "titre_stage", referencedColumnName = "titre_stage", foreignKey =
+    @ForeignKey(name = "FK_stage"))
+    private StageEntity stage;
 
 
 }

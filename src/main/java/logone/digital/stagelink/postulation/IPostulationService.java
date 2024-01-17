@@ -1,17 +1,37 @@
 package logone.digital.stagelink.postulation;
+import logone.digital.stagelink.etudiant.EtudiantAlreadyExistException;
+import logone.digital.stagelink.etudiant.EtudiantDtoRequest;
+import logone.digital.stagelink.stage.StageDtoResponse;
+
 import java.util.List;
 import java.util.Optional;
 
 public interface IPostulationService {
-    PostulationDto create(PostulationEntity postulation);
+    public PostulationDtoResponse create(PostulationDtoRequest postulation);
 
-    List<PostulationDto> readAll();
-    PostulationDto readOneById(Long id);
+    List<PostulationDtoResponse> readAll();
 
-    PostulationDto update(PostulationDto postulation);
+    PostulationDtoResponse readOneById(Long id);
 
-    void deleteOneById(Long id);
+    PostulationDtoResponse update(PostulationDtoRequest postulation) throws EtudiantAlreadyExistException;
+
+    void deleteOneById(Long idPostulation);
+
+    List<PostulationDtoResponse> getAllPostulationByEmail(String email);
+
+//    List<PostulationDtoResponse> readAll();
+
+//    PostulationDtoResponse readOneById(Long id);
+
+//    PostulationDtoResponse update(PostulationDtoRequest postulation) throws EtudiantAlreadyExistException;
+
+//    void deleteOneById(Long idPostulation);
+
+
+
+//    List<PostulationDtoResponse> getAllPostulationByEmail(String email);
+
 
     //    void deleteOneById(Long id);
-    void deleteOne(PostulationDto postulation);
+//    void deleteOne(PostulationDtoResponse postulation);
 }

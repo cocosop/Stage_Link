@@ -2,14 +2,13 @@ package logone.digital.stagelink.stage;
 import logone.digital.stagelink.entreprise.EntrepriseEntity;
 import logone.digital.stagelink.entreprise.EntrepriseRepository;
 import logone.digital.stagelink.entreprise.NoSuchEntrepriseExistException;
-import logone.digital.stagelink.etudiant.EtudiantAlreadyExistException;
+import logone.digital.stagelink.postulation.PostulationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -17,15 +16,16 @@ public class StageService implements IStageService {
     final StageRepository stageRepository;
     final StageMapper stageMapper;
     final EntrepriseRepository entrepriseRepository;
+    final PostulationRepository postulationRepository;
 
 
     @Override
     public StageDtoResponse create(StageDtoRequest stage) {
         StageEntity stage1 = this.stageMapper.stageDtoVersStage(stage);
-        EntrepriseEntity entrepriseEntity = this.entrepriseRepository.findByNomEntreprise(stage.getNomEntreprise())
+        EntrepriseEntity entrepriseEntity = this.entrepriseRepository.findByEmail(stage.getEmail())
                 .orElseThrow(()-> new NoSuchEntrepriseExistException());
         stage1.setEntreprise(entrepriseEntity);
-        System.out.println(stage.getNomEntreprise());
+        System.out.println(stage.getEmail());
         return this.stageMapper.stageVersStageDto(this.stageRepository.save(stage1));
     }
 
@@ -40,19 +40,20 @@ public class StageService implements IStageService {
 
 
     @Override
-    public void deleteOneById(Long id) {
-        stageRepository.deleteById(id);
+    public void deleteOneById(Long idStage) {
+        stageRepository.deleteById(idStage);
     }
 
     @Override
-    public StageDtoResponse update(StageDtoRequest stage, Long id) {
+    public StageDtoResponse update(StageDtoRequest stage, Long idStage) {
         try {
             // Recherche l'entité par email
-            StageEntity stageEntity = this.stageRepository.findById(id)
-                    .orElseThrow(() -> new Error("This stage with this " + id + " doesn't exist in our data base"));
+            StageEntity stageEntity = this.stageRepository.findById(idStage)
+                    .orElseThrow(() -> new Error("This stage with this " + idStage + " doesn't exist in our data base"));
             // Mappe la requête sur l'entité
             StageEntity stage1 = this.stageMapper.stageDtoVersStage(stage);
-            stage1.setId(stageEntity.getId());
+            stage1.setIdStage(stageEntity.getIdStage());
+            stage1.setEntreprise(stageEntity.getEntreprise());
             // Sauvegarde l'entité modifiée
             return this.stageMapper.stageVersStageDto(this.stageRepository.save(stage1));
         }catch (Exception e){
@@ -63,13 +64,18 @@ public class StageService implements IStageService {
     }
 
     @Override
-    public StageDtoResponse readOneById(Long id) {
-        return this.stageMapper.stageVersStageDto(stageRepository.findById(id)
+    public StageDtoResponse readOneById(Long idStage) {
+        return this.stageMapper.stageVersStageDto(stageRepository.findById(idStage)
                 .orElseThrow(()->new NoSuchElementException("this stage not exist")));
     }
-
-    public StageDtoResponse getStagesByNomEntreprise(String nomEntreprise) {
-        return this.stageMapper.stageVersStageDto(stageRepository.findStagesByNomEntreprise(nomEntreprise));
+    @Override
+    public List <StageDtoResponse> getAllStagesByNomEntreprise(String email) {
+        List<StageEntity> stage = (List<StageEntity>) this.stageRepository.findByEntreprise_Email(email);
+        List<StageDtoResponse> stageDtoResponses = new ArrayList<>();
+        stage.forEach(stage1 -> stageDtoResponses.add(this.stageMapper.stageVersStageDto(stage1)));
+        return stageDtoResponses;
     }
+
+
 }
 

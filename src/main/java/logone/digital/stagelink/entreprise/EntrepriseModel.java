@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EntrepriseModel {
-    @Column(name = "nom_entreprise")
-    String nomEntreprise;
+    @Column(name = "email")
+    String email;
 }

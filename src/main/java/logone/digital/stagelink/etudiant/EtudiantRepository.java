@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface EtudiantRepository  extends JpaRepository<EtudiantEntity, Long>{
 
     Optional<EtudiantEntity> findByEmail(String email);
+//    Optional <EtudiantEntity> findByNomEtudiant(String nomEtudiant);
 
     void  deleteByEmail(String email);
 }

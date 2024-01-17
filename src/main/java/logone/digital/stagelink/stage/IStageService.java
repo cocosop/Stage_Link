@@ -14,13 +14,13 @@ public interface IStageService {
 
 //    StageDtoResponse update(StageDtoRequest stage, String nomEntreprise);
 
-    StageDtoResponse update(StageDtoRequest stage, Long id);
+    StageDtoResponse update(StageDtoRequest stage, Long idStage);
 
-    StageDtoResponse readOneById(Long id);
+    StageDtoResponse readOneById(Long idStage);
 
-    void deleteOneById(Long id);
-
-    public StageDtoResponse getStagesByNomEntreprise(String nomEntreprise);
-
+    void deleteOneById(Long idStage);
+//    public List <StageDtoResponse> getAllStagesByNbrePostulation(Long idStage)
+////    public StageDtoResponse getAllStagesByNomEntreprise(String nomEntreprise);
+    public List <StageDtoResponse> getAllStagesByNomEntreprise(String nomEntreprise);
 
 }

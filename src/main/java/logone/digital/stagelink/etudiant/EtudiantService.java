@@ -25,6 +25,10 @@ public class EtudiantService implements IEtudiantService{
         String role = "ETUDIANT";
         return  role;
     }
+    public String generateStatut(){
+        String statut = "Actif";
+        return  statut;
+    }
 
     public Instant generateDate(){
         Instant today = Instant.now();
@@ -33,15 +37,14 @@ public class EtudiantService implements IEtudiantService{
     @Override
     public EtudiantDtoResponse create(EtudiantDtoRequest etudiant) {
         Optional<EtudiantEntity> etudiantEntity = this.etudiantRepository.findByEmail(etudiant.getEmail());
-        etudiant.setMotDePasse(this.passwordEncoder.encode(etudiant.getMotDePasse()));
+        etudiant.setPassword(this.passwordEncoder.encode(etudiant.getPassword()));
         etudiant.setRoles(this.generateRole());
+        etudiant.setStatut(this.generateStatut());
         etudiant.setDateInscription(this.generateDate());
-
         EtudiantEntity etudiant1 = this.etudiantMapper.etudiantDtoVersEtudiant(etudiant);
         if (etudiantEntity.isPresent()){
             throw new EtudiantAlreadyExistException("Student with this email already exist !!!");
         }
-
         return this.etudiantMapper.etudiantVersEtudiantDto(this.etudiantRepository.save(etudiant1));
     }
 

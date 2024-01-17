@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/entreprises")
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class EntrepriseController {
 
     final EntrepriseService entrepriseService;

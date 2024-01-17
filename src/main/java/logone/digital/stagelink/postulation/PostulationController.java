@@ -2,6 +2,7 @@ package logone.digital.stagelink.postulation;
 
 
 import jakarta.validation.Valid;
+import logone.digital.stagelink.etudiant.EtudiantDtoResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,51 +13,54 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/postulations")
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class PostulationController {
 
-    final PostulationServive postulationServive;
+    final PostulationService postulationService;
 
 
-    //POST http://localhost:8089/stage-link/api/v1//postulations/ajouter
+    //POST http://localhost:8089/stage-link/api/v1/postulations/ajouter
     @PostMapping(path = "/ajouter")
     @ResponseBody
-    public ResponseEntity<PostulationDto> ajouterPostulations(@RequestBody @Valid PostulationEntity postulation)
+    public ResponseEntity<PostulationDtoResponse> ajouterPostulations(@RequestBody @Valid PostulationDtoRequest postulation)
     {
-        return new ResponseEntity<>(postulationServive.create(postulation), HttpStatus.CREATED);
+        return new ResponseEntity<>(postulationService.create(postulation), HttpStatus.CREATED);
     }
 
 
     //PUT http://localhost:8089/stage-link/api/v1/postulations/modifier
     @PutMapping(path = "/modifier")
     @ResponseBody
-    public PostulationDto modifierPostulation(@RequestBody  @Valid  PostulationDto postulation){
+    public PostulationDtoResponse modifierPostulation(@RequestBody  @Valid  PostulationDtoRequest postulation){
 
-        return postulationServive.
+        return postulationService.
                 update(postulation);
     }
 
-    //GET http://localhost:8089/stage-link/api/v1/postulations/recuperer-tous
-    @GetMapping(path = "/recuperer-tous")
+    //GET http://localhost:8089/stage-link/api/v1/postulations/recuperer/email
+    @GetMapping(path = "/recuperer/{email}")
     @ResponseBody
-    public List<PostulationDto> recupererPostulation()
+    public List<PostulationDtoResponse> recupererPostulation(@PathVariable("email") String email)
     {
-        return postulationServive.readAll();
-    }
-    //GET by id http://localhost:8089/stage-link/api/v1/postulations/recuperer/1
-    @GetMapping(path = "/recuperer/{idPostulation}")
-    @ResponseBody
-    public PostulationDto recupererPostulation(@PathVariable("idPostulation") Long id)
-    {
-        return postulationServive.readOneById(id);
+        return postulationService.getAllPostulationByEmail(email);
     }
 
 
-    // DELETE http://localhost:8089/stage-link/api/v1/postulations/supprimer/1
-    @DeleteMapping(path = "/supprimer/{idPostulations}")
-    @ResponseBody
-    public void supprimerPostulation
-    (@PathVariable("idPostulations") Long id)
-    {
-        postulationServive.deleteOneById(id);
-    }
+//    //GET by id http://localhost:8089/stage-link/api/v1/postulations/recuperer/1
+//    @GetMapping(path = "/recuperer/{idPostulation}")
+//    @ResponseBody
+//    public PostulationDto recupererPostulation(@PathVariable("idPostulation") Long id)
+//    {
+//        return postulationServive.readOneById(id);
+//    }
+
+
+//    // DELETE http://localhost:8089/stage-link/api/v1/postulations/supprimer/1
+//    @DeleteMapping(path = "/supprimer/{idPostulations}")
+//    @ResponseBody
+//    public void supprimerPostulation
+//    (@PathVariable("idPostulations") Long id)
+//    {
+//        postulationServive.deleteOneById(id);
+//    }
 }

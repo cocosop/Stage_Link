@@ -4,11 +4,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface StageRepository extends JpaRepository<StageEntity, Long> {
-//    Optional<StageEntity> findById(Long id);
+    Optional<StageEntity> findBytitreStage(String titreStage);
+    List<StageEntity> findByEntreprise_Email(String email);
 
-
-    @Query(value = "SELECT * FROM _stage WHERE nom_entreprise =:nom", nativeQuery = true)
-    StageEntity findStagesByNomEntreprise(@Param("nom") String nomEntreprise);
 
 }

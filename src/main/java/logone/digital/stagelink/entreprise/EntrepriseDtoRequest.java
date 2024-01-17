@@ -17,11 +17,11 @@ import java.util.Set;
 @NoArgsConstructor
 public class EntrepriseDtoRequest {
 
-   @Email(message = "l'adresse email est incorrect")
-   @NotNull(message = "l'adresse email est obligatoire")
+    @Email(message = "l'adresse email est incorrect")
+    @NotNull(message = "l'adresse email est obligatoire")
     private String email;
-    @NotNull(message = "le nom de l'entreprise est obligatoire")
-    private String motDePasse;
+    @NotNull(message = "le mot de passe de l'entreprise est obligatoire")
+    private String password;
     private String roles;
     @NotNull(message = "le nom de l'entreprise est obligatoire")
     private String nomEntreprise;

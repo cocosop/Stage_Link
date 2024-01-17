@@ -11,17 +11,15 @@ import java.time.Instant;
 @AllArgsConstructor
 public class EntrepriseDtoResponse {
 
-    private Long id;
     @Email(message = "l'adresse email est incorrect")
     private String email;
-    private String motDePasse;
-    private String roles;
+    private String password;
     private String nomEntreprise;
     private String responsable;
     private String telephone;
     private String adresse;
     private Instant dateInscription;
-    private  String statut ;
+
 
 
 }

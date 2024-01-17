@@ -29,7 +29,10 @@ public class EntrepriseService implements IEntrepriseService{
         String role = "ENTREPRISE";
         return  role;
     }
-
+    public String generateStatut(){
+        String statut = "Actif";
+        return  statut;
+    }
     public Instant generateDate(){
         Instant today = Instant.now();
         return  today;
@@ -38,8 +41,9 @@ public class EntrepriseService implements IEntrepriseService{
     @Override
     public EntrepriseDtoResponse create(EntrepriseDtoRequest entreprise) {
         Optional<EntrepriseEntity> entrepriseEntity = this.entrepriseRepository.findByEmail(entreprise.getEmail());
-        entreprise.setMotDePasse(this.passwordEncoder.encode(entreprise.getNomEntreprise()));
+        entreprise.setPassword(this.passwordEncoder.encode(entreprise.getPassword()));
         entreprise.setRoles(this.generateRole());
+        entreprise.setStatut(this.generateStatut());
         entreprise.setDateInscription(this.generateDate());
         EntrepriseEntity entreprise1 = this.entrepriseMapper.entrepriseDtoVersEntreprise(entreprise);
         if (entrepriseEntity.isPresent()){
@@ -70,7 +74,6 @@ public class EntrepriseService implements IEntrepriseService{
             // Recherche l'entité par email
             EntrepriseEntity entrepriseEntity = this.entrepriseRepository.findByEmail(email)
                     .orElseThrow(() -> new Error ("This email " + email + " doesn't exist in our data base"));
-
             // Mappe la requête sur l'entité
             EntrepriseEntity entreprise1 = this.entrepriseMapper.entrepriseDtoVersEntreprise(entreprise);
             // Conserve l'id, les rôles, la date d'inscription et le statut de l'entité originale
@@ -99,12 +102,7 @@ public class EntrepriseService implements IEntrepriseService{
             throw new EntrepriseAlreadyExistsException("This email " +email+ " doesn't exist in our data base");
         }
         this.entrepriseRepository.deleteByEmail(email);
-
     }
-
-
-
-
 }
 
 

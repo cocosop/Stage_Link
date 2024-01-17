@@ -2,19 +2,19 @@ package logone.digital.stagelink.user;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.NaturalId;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.io.Serial;
 import java.io.Serializable;
+
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "_user")
+@CrossOrigin
 @Inheritance(strategy = InheritanceType.JOINED)
-public class UserEntity implements Serializable {
+public class User implements Serializable {
     @Serial
     private static final  long serialVersionUID = 1L;
 
@@ -22,6 +22,9 @@ public class UserEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
     protected String email;
-    protected String motDePasse;
+    protected String password;
     protected String roles;
+
+
+
 }

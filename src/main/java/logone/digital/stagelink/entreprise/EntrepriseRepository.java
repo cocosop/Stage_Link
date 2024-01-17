@@ -15,7 +15,5 @@ public interface EntrepriseRepository extends CrudRepository<EntrepriseEntity, L
 
       Optional<EntrepriseEntity> findByEmail(String email);
       Optional<EntrepriseEntity> findByNomEntreprise(String nomEntreprise);
-
-
       void  deleteByEmail(String email);
 }

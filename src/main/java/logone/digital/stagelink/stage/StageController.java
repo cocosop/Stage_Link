@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/stages")
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class StageController {
 
     final StageService stageService;
@@ -32,20 +33,20 @@ public class StageController {
     }
 
     //GET by nom_entreprise http://localhost:8089/stage-link/api/v1/stages/search/{nom_entreprise}
-    @GetMapping(path = "/search/{nom_entreprise}")
+    @GetMapping(path = "/search/{email}")
     @ResponseBody
-    public StageDtoResponse searchByNomEntreprise(@PathVariable("nom_entreprise") String nom_entreprise)
+    public List <StageDtoResponse> searchByNomEntreprise(@PathVariable("email") String email)
     {
-            return stageService.getStagesByNomEntreprise(nom_entreprise);
+            return stageService.getAllStagesByNomEntreprise(email);
     }
 
 
     //PUT http://localhost:8089/stage-link/api/v1/stages/modifier
-    @PutMapping(path = "/modifier/{id}")
+    @PutMapping(path = "/modifier/{idStage}")
     @ResponseBody
-    public StageDtoResponse modifierStages(@RequestBody  @Valid  StageDtoRequest stage, @PathVariable(name = "id") Long id){
+    public StageDtoResponse modifierStages(@RequestBody  @Valid  StageDtoRequest stage, @PathVariable(name = "idStage") Long idStage){
 
-        return stageService.update(stage,id);
+        return stageService.update(stage,idStage);
     }
 
     //GET by  id http://localhost:8089/stage-link/api/v1/stages/recuperer/1
@@ -63,9 +64,19 @@ public class StageController {
     @DeleteMapping(path = "/supprimer/{idStages}")
     @ResponseBody
     public void supprimerStages
-    (@PathVariable("idStages") Long id)
+    (@PathVariable("idStages") Long idStage)
     {
-        stageService.deleteOneById(id);
+        stageService.deleteOneById(idStage);
 
     }
+
+    //GET http://localhost:8089/stage-link/api/v1/stages/recuperer-tous
+//    @GetMapping(path = "/recupererAll")
+//    @ResponseBody
+//    public List<StageDtoResponse> recupererStagesByNbrePostulation()
+//    {
+//        return stageService.getAllStagesByNbrePostulation();
+//    }
+
+
 }
