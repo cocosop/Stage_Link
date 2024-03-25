@@ -31,6 +31,7 @@ public class EntrepriseDtoRequest {
     private String telephone;
     @NotNull(message = "L'adresse est obligatoire")
     private String adresse;
+    private String logo;
     private Instant dateInscription;
     private  String statut ;
 

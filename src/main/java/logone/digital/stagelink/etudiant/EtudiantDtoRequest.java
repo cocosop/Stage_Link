@@ -32,4 +32,6 @@ public class EtudiantDtoRequest {
     private String email;
     private String roles;
     private String cv;
+    private String photo;
+
 }

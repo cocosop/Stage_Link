@@ -35,8 +35,8 @@ public class PostulationEntity implements Serializable {
     @ForeignKey(name = "FK_etudiant"))
     private EtudiantEntity etudiant;
 
-    @ManyToOne(targetEntity = StageEntity.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "titre_stage", referencedColumnName = "titre_stage", foreignKey =
+    @ManyToOne(targetEntity = StageEntity.class, fetch = FetchType.LAZY )
+    @JoinColumn(name = "idStage", referencedColumnName = "idStage", foreignKey =
     @ForeignKey(name = "FK_stage"))
     private StageEntity stage;
 

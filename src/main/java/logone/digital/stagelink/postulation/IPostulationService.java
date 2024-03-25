@@ -9,29 +9,15 @@ import java.util.Optional;
 public interface IPostulationService {
     public PostulationDtoResponse create(PostulationDtoRequest postulation);
 
-    List<PostulationDtoResponse> readAll();
 
-    PostulationDtoResponse readOneById(Long id);
-
-    PostulationDtoResponse update(PostulationDtoRequest postulation) throws EtudiantAlreadyExistException;
-
-    void deleteOneById(Long idPostulation);
+    PostulationDtoResponse update(PostulationDtoRequest postulation,Long idPostulation) throws EtudiantAlreadyExistException;
 
     List<PostulationDtoResponse> getAllPostulationByEmail(String email);
+    List<PostulationDtoResponse> getAllPostulationByTitreStage(String titreStage);
 
-//    List<PostulationDtoResponse> readAll();
 
-//    PostulationDtoResponse readOneById(Long id);
-
-//    PostulationDtoResponse update(PostulationDtoRequest postulation) throws EtudiantAlreadyExistException;
-
-//    void deleteOneById(Long idPostulation);
+     PostulationDtoResponse readOneById(Long idPostulation) ;
 
 
 
-//    List<PostulationDtoResponse> getAllPostulationByEmail(String email);
-
-
-    //    void deleteOneById(Long id);
-//    void deleteOne(PostulationDtoResponse postulation);
 }

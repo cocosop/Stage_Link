@@ -1,9 +1,13 @@
 package logone.digital.stagelink.entreprise;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import logone.digital.stagelink.stage.StageEntity;
 import logone.digital.stagelink.user.User;
 import lombok.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,6 +31,9 @@ public class EntrepriseEntity extends User {
     private String adresse;
 
     @Column
+    private String logo;
+
+    @Column
     private Instant dateInscription;
 
     @Column(name = "etat-compte")
@@ -34,8 +41,8 @@ public class EntrepriseEntity extends User {
 
 
 
-//  @JsonIgnore
-//    @OneToMany(mappedBy = "entreprise", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    private List<StageEntity> stage  =  new ArrayList<>();
+  @JsonIgnore
+    @OneToMany(mappedBy = "entreprise", cascade = CascadeType.ALL)
+    private List<StageEntity> stage  =  new ArrayList<>();
 
 }

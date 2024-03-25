@@ -1,10 +1,12 @@
 package logone.digital.stagelink.postulation;
+import logone.digital.stagelink.entreprise.EntrepriseEntity;
 import logone.digital.stagelink.etudiant.*;
 import logone.digital.stagelink.stage.NoSuchStageExistException;
 import logone.digital.stagelink.stage.StageEntity;
 import logone.digital.stagelink.stage.StageRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.ErrorResponseException;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -19,13 +21,14 @@ public class PostulationService implements IPostulationService {
     final StageRepository stageRepository;
     final EtudiantRepository etudiantRepository;
 
-    public String generateStatut(){
-        String statut = "En cours";
-        return  statut;
-    }
+
     public Instant generateDate(){
         Instant today = Instant.now();
         return  today;
+    }
+    public String generateStatut(){
+        String statut = "Encours";
+        return  statut;
     }
 
     @Override
@@ -33,7 +36,7 @@ public class PostulationService implements IPostulationService {
         PostulationEntity postulation1 = this.postulationMapper.postulationDtoVersPostulation(postulation);
         EtudiantEntity etudiantEntity = this.etudiantRepository.findByEmail(postulation.getEmail())
                 .orElseThrow(()->new NoSuchEtudiantExistException());
-        StageEntity stageEntity = this.stageRepository.findBytitreStage(postulation.getTitreStage())
+        StageEntity stageEntity = this.stageRepository.findById(postulation.getIdStage())
                 .orElseThrow(()->new NoSuchStageExistException());
         postulation1.setDatePostulation(this.generateDate());
         postulation1.setStatut(this.generateStatut());
@@ -42,30 +45,22 @@ public class PostulationService implements IPostulationService {
         return this.postulationMapper.postulationVersPostulationDto(this.postulationRepository.save(postulation1));
     }
 
-    @Override
-    public List<PostulationDtoResponse> readAll() {
-        return null;
-    }
+
+
 
     @Override
-    public PostulationDtoResponse readOneById(Long id) {
-        return null;
-    }
-
-    @Override
-    public PostulationDtoResponse update(PostulationDtoRequest postulation) throws EtudiantAlreadyExistException {
+    public PostulationDtoResponse update(PostulationDtoRequest postulation,Long idPostulation) throws EtudiantAlreadyExistException {
         try {
-            EtudiantEntity etudiantEntity = this.etudiantRepository.findByEmail(postulation.getEmail())
-                    .orElseThrow(() -> new NoSuchEtudiantExistException());
-            StageEntity stageEntity = this.stageRepository.findBytitreStage(postulation.getTitreStage())
-                    .orElseThrow(() -> new NoSuchEtudiantExistException());
-            Optional<PostulationEntity> postulationEntity =this.postulationRepository.findByIdPostulation(postulation.getIdPostulation());
+
+            PostulationEntity postulationEntity = this.postulationRepository.findByIdPostulation(idPostulation)
+                    .orElseThrow(() -> new Error("The postulation with this " + idPostulation + " doesn't exist in our data base"));
+            // Mappe la requête sur l'entité
             PostulationEntity postulation1 = this.postulationMapper.postulationDtoVersPostulation(postulation);
             // Conserve l'id, les rôles et le statut de l'entité originale
-            postulation1.setIdPostulation(postulation1.getIdPostulation());
-            postulation1.setDatePostulation(postulation1.getDatePostulation());
-            postulation1.setEtudiant(etudiantEntity);
-            postulation1.setStage(stageEntity);
+            postulation1.setIdPostulation(postulationEntity.getIdPostulation());
+            postulation1.setDatePostulation(postulationEntity.getDatePostulation());
+            postulation1.setEtudiant(postulationEntity.getEtudiant());
+            postulation1.setStage(postulationEntity.getStage());
             // Sauvegarde l'entité modifiée
             return this.postulationMapper.postulationVersPostulationDto(this.postulationRepository.save(postulation1));
         } catch (PostulationAlreadyExistsException e) {
@@ -79,10 +74,7 @@ public class PostulationService implements IPostulationService {
         }
     }
 
-    @Override
-    public void deleteOneById(Long idPostulation) {
 
-    }
 
     @Override
     public List<PostulationDtoResponse> getAllPostulationByEmail(String email) {
@@ -92,6 +84,37 @@ public class PostulationService implements IPostulationService {
         return postulationDtoResponses;
     }
 
+    @Override
+    public  List<PostulationDtoResponse> getAllPostulationByTitreStage(String titreStage) {
+        List<PostulationEntity> postulation =  this.postulationRepository.findAllByStage_TitreStage(titreStage);
+        List<PostulationDtoResponse> postulationDtoResponses = new ArrayList<>();
+        postulation.forEach(postulation1 -> postulationDtoResponses.add(this.postulationMapper.postulationVersPostulationDto(postulation1)));
+        return postulationDtoResponses;
+    }
+
+//    @Override
+//    public  List<PostulationDtoResponse> getAllNbrePostulation(Long idStages) {
+//        List<PostulationEntity> postulation =  this.postulationRepository.countAllByStage_IdStage(idStages);
+//        List<PostulationDtoResponse> postulationDtoResponses = new ArrayList<>();
+//        postulation.forEach(postulation1 -> postulationDtoResponses.add(this.postulationMapper.postulationVersPostulationDto(postulation1)));
+//        return postulationDtoResponses;
+//    }
+//    @Override
+//    public  List<PostulationDtoResponse> getAllPostulationById(Long idPostulation) {
+//        Optional<PostulationEntity> postulation =  this.postulationRepository.findByIdPostulation(idPostulation);
+//        List<PostulationDtoResponse> postulationDtoResponses = new ArrayList<>();
+//        postulation.forEach(postulation1 -> postulationDtoResponses.add(this.postulationMapper.postulationVersPostulationDto(postulation1)));
+//        return postulationDtoResponses;
+//    }
+
+    @Override
+    public PostulationDtoResponse readOneById(Long idPostulation) {
+        try {
+            return this.postulationMapper.postulationVersPostulationDto(this.postulationRepository.findByIdPostulation(idPostulation).get());
+        }catch (Exception ex){
+            throw new PostulationAlreadyExistsException("This email " +idPostulation+ " doesn't exist in our data base");
+        }
+    }
 
 }
 

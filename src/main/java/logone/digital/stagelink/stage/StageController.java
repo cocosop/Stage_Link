@@ -70,7 +70,7 @@ public class StageController {
 
     }
 
-    //GET http://localhost:8089/stage-link/api/v1/stages/recuperer-tous
+//    GET http://localhost:8089/stage-link/api/v1/stages/recuperer-tous
 //    @GetMapping(path = "/recupererAll")
 //    @ResponseBody
 //    public List<StageDtoResponse> recupererStagesByNbrePostulation()

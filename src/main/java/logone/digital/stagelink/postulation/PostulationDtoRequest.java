@@ -18,7 +18,7 @@ public class PostulationDtoRequest{
     private Long idPostulation;
     private Instant datePostulation;
     private String statut;
-    private  String titreStage;
+    private  Long idStage;
     private String email;
 
 

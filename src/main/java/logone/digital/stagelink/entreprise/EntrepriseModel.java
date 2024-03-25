@@ -14,4 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 public class EntrepriseModel {
     @Column(name = "email")
     String email;
+    @Column(name = "nomEntreprise")
+    String nomEntreprise;
 }

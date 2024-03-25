@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @Repository
 public interface PostulationRepository extends JpaRepository<PostulationEntity,Long> {
+    List<PostulationEntity> findAllByStage_TitreStage(String titreStage);
     Optional<PostulationEntity> findByIdPostulation(Long idPostulation);
 
     List<PostulationEntity> findByEtudiant_Email(String email);
@@ -21,7 +22,7 @@ public interface PostulationRepository extends JpaRepository<PostulationEntity,L
 //    @Query(value = "SELECT * FROM _postulation WHERE `email` =:email AND `titre_stage` =:titreStage", nativeQuery = true)
 //    List<PostulationEntity> findByEmailAndTitre(@Param("email")  String email,  @Param("titreStage") String titreStage);
 
-//    @Query(value = "SELECT COUNT(*) FROM `_postulation` p WHERE p.`id_stage` = :idStage ", nativeQuery = true)
-//    Long countByStageIdAndEtudiantNom(@Param("idStage") Long idStage);
+    @Query(value = "SELECT COUNT(*) FROM `_postulation` p WHERE p.`id_stage` = :idStage ", nativeQuery = true)
+    Long countAllByStage_IdStage(@Param("idStage") Long idStage);
 }
 

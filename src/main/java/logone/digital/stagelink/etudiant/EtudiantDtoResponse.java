@@ -24,6 +24,7 @@ public class EtudiantDtoResponse  {
     private String password;
     private Instant dateInscription;
     private String cv;
+    private String photo;
     private String email;
 //    public  static EtudiantEntity toEntity(EtudiantDto etudiantDto) {
 //

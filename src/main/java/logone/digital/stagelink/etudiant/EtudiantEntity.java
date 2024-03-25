@@ -37,6 +37,9 @@ public class EtudiantEntity extends User {
         private String cv;
 
         @Column
+        private String photo;
+
+        @Column
         private Instant dateInscription;
 
         @Column(name = "etat-compte")

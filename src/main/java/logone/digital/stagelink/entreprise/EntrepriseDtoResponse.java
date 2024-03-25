@@ -18,6 +18,7 @@ public class EntrepriseDtoResponse {
     private String responsable;
     private String telephone;
     private String adresse;
+    private String logo;
     private Instant dateInscription;
 
 

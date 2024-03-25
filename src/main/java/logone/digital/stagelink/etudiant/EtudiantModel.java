@@ -11,4 +11,12 @@ import lombok.*;
 public class EtudiantModel {
     @Column(name = "email")
     String email;
+
+    @Column(name = "cv")
+    String cv;
+
+    @Column(name = "photo")
+    String photo;
+
+
 }

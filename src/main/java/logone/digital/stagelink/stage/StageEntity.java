@@ -2,10 +2,13 @@ package logone.digital.stagelink.stage;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import logone.digital.stagelink.entreprise.EntrepriseEntity;
+import logone.digital.stagelink.postulation.PostulationEntity;
 import lombok.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -30,7 +33,7 @@ public class StageEntity implements Serializable {
 
 
 
-    @ManyToOne(targetEntity = EntrepriseEntity.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = EntrepriseEntity.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "email", referencedColumnName = "email", foreignKey = @ForeignKey(name = "FK_entreprise"))
     private EntrepriseEntity entreprise;
 
@@ -40,7 +43,7 @@ public class StageEntity implements Serializable {
 //    @ManyToMany
 //    private Set<EtudiantEntity> etudiants;
 //
-//    @OneToMany(mappedBy = "stage", cascade = CascadeType.ALL)
-//    private Set<PostulationEntity> postulation;
+    @OneToMany(mappedBy = "stage", cascade = CascadeType.ALL)
+    private Set<PostulationEntity> postulation;
 
 }
